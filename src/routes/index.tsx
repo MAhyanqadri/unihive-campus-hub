@@ -1,23 +1,80 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { ArrowRight, Bot, Brain, FileText, FolderKanban, MessageSquareText } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { PageHeader, Panel, Stat, DocRow, Pill, Initials } from "@/components/app/ui-bits";
+import { useStore } from "@/lib/store";
+import { activity, agents, knowledge } from "@/lib/data";
+import { meta } from "@/lib/meta";
 
-// The home route ships no og:image, so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => meta("Dashboard", "Your UniHive workspace: courses, group projects, knowledge and AI agents at a glance."),
+  component: Dashboard,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+const statusTone = { active: "success", processing: "primary", idle: "muted" } as const;
+
+function Dashboard() {
+  const { docs, courses, projects } = useStore();
+  const openTasks = projects.flatMap((p) => p.tasks).filter((t) => t.status !== "done").length;
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <>
+      <div className="surface relative mb-8 overflow-hidden p-6 sm:p-8">
+        <div className="absolute inset-0 bg-glow opacity-80" />
+        <div className="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+          <div>
+            <p className="text-sm text-muted-foreground">Friday, 20 November</p>
+            <h1 className="mt-1 text-3xl font-semibold sm:text-4xl">Welcome back, <span className="text-brand">Ahyan</span></h1>
+            <p className="mt-2 max-w-xl text-sm text-muted-foreground">You have {openTasks} open tasks across {projects.length} projects. The Review Agent flagged one item for your Market Entry report.</p>
+          </div>
+          <Button variant="brand" size="lg" asChild><Link to="/chat"><MessageSquareText /> Ask UniHive</Link></Button>
+        </div>
+      </div>
+
+      <div className="mb-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
+        <Stat label="Courses" value={courses.length} icon={<FileText className="h-4 w-4" />} hint="Autumn 2026" />
+        <Stat label="Documents" value={docs.length} icon={<FileText className="h-4 w-4" />} hint="+3 this week" />
+        <Stat label="Knowledge items" value={knowledge.length} icon={<Brain className="h-4 w-4" />} hint="+6 extracted today" />
+        <Stat label="Active projects" value={projects.length} icon={<FolderKanban className="h-4 w-4" />} />
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-3">
+        <Panel title="Recent documents" className="lg:col-span-2" action={<Link to="/courses" className="text-xs text-primary">View all</Link>}>
+          <div className="space-y-1">{docs.slice(0, 5).map((d) => <DocRow key={d.id} doc={d} />)}</div>
+        </Panel>
+        <Panel title="Active agents" action={<Link to="/agents" className="text-xs text-primary">Monitor</Link>}>
+          <div className="space-y-3">
+            {agents.map((a) => (
+              <div key={a.id} className="flex items-center gap-3 rounded-lg border p-3">
+                <div className="grid h-9 w-9 place-items-center rounded-lg bg-accent text-violet"><Bot className="h-4 w-4" /></div>
+                <div className="flex-1"><div className="text-sm font-medium">{a.name}</div><div className="text-xs text-muted-foreground">{a.tasksToday} tasks today</div></div>
+                <Pill tone={statusTone[a.status]}>{a.status}</Pill>
+              </div>
+            ))}
+          </div>
+        </Panel>
+        <Panel title="Latest knowledge" className="lg:col-span-2" action={<Link to="/knowledge" className="text-xs text-primary">Knowledge Base</Link>}>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {knowledge.slice(0, 4).map((k) => (
+              <div key={k.id} className="rounded-lg border p-4">
+                <Pill tone="violet">{k.category}</Pill>
+                <div className="mt-2 text-sm font-medium">{k.title}</div>
+                <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">{k.content}</p>
+              </div>
+            ))}
+          </div>
+        </Panel>
+        <Panel title="Recent activity">
+          <ol className="space-y-4">
+            {activity.map((a) => (
+              <li key={a.id} className="flex gap-3">
+                <Initials name={a.who} className="h-7 w-7 text-[10px]" />
+                <div className="text-sm"><span className="font-medium">{a.who}</span> <span className="text-muted-foreground">{a.action}</span> {a.target}<div className="text-xs text-muted-foreground">{a.time}</div></div>
+              </li>
+            ))}
+          </ol>
+          <Link to="/projects" className="mt-4 inline-flex items-center gap-1 text-xs text-primary">Open projects <ArrowRight className="h-3 w-3" /></Link>
+        </Panel>
+      </div>
+    </>
   );
 }

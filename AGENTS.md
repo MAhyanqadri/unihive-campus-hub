@@ -28,3 +28,7 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+- App data lives in a client-side demo store (src/lib/store.tsx seeded from src/lib/data.ts); swap setters for Lovable Cloud queries when a backend is added — why: frontend-first demo with realistic sample data.
+- Chat answers go through askUniHive in src/lib/ask.ts returning { text, sources }; replace its body with a server function calling the AI Gateway — why: keeps keys server-side and the UI contract stable.
+- Shared app frame (sidebar + header) wraps <Outlet /> in __root via AppShell — why: one consistent layout across pages.
