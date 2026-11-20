@@ -24,7 +24,7 @@ function Dashboard() {
         <div className="absolute -bottom-24 left-1/3 h-56 w-56 animate-pulse rounded-full bg-sun blur-3xl" />
         <div className="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div>
-            <span className="label-mono inline-flex items-center gap-2 text-muted-foreground"><span className="pulse-dot h-1.5 w-1.5 rounded-full bg-primary text-primary" />Fri 20 Nov · Autumn term · Live</span>
+            <span className="inline-flex rounded-full bg-sun px-3 py-1 text-xs font-medium">Friday, 20 November · Autumn term</span>
             <h1 className="mt-1 text-3xl font-semibold sm:text-4xl">Welcome back, <em>Ahyan</em></h1>
             <p className="mt-2 max-w-xl text-sm text-muted-foreground">You have {openTasks} open tasks across {projects.length} projects. The Review Agent flagged one item for your Market Entry report.</p>
           </div>
