@@ -61,7 +61,7 @@ function Courses() {
       const type: Doc["type"] = file.name.endsWith(".pdf") ? "pdf" : /\.(pptx?|key)$/.test(file.name) ? "slides" : "notes";
       addDoc({ name: file.name, type, size: `${(file.size / 1024 / 1024).toFixed(1)} MB`, courseId: course.id, pages: Math.max(1, Math.round(file.size / 60000)) });
     });
-    toast.success(`${files.length} file(s) uploaded — Knowledge Agent is extracting key ideas`);
+    toast.success(`${files.length} file(s) added to this demo — file contents aren't read yet`);
   };
 
   return (

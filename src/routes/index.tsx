@@ -7,7 +7,7 @@ import { activity, agents, knowledge } from "@/lib/data";
 import { meta } from "@/lib/meta";
 
 export const Route = createFileRoute("/")({
-  head: () => meta("Dashboard", "Your UniHive workspace: courses, group projects, knowledge and AI agents at a glance."),
+  head: () => meta("One shared brain for university students", "UniHive connects course materials, project requirements and source-linked knowledge with Knowledge, Collaboration and Review agents."),
   component: Dashboard,
 });
 
@@ -31,6 +31,26 @@ function Dashboard() {
           <Button variant="brand" size="lg" asChild><Link to="/chat"><MessageSquareText /> Ask UniHive</Link></Button>
         </div>
       </div>
+
+      <section aria-labelledby="what" className="surface mb-8 p-6 sm:p-8">
+        <span className="inline-flex rounded-full bg-lilac px-3 py-1 text-xs font-medium">What is UniHive?</span>
+        <h2 id="what" className="mt-2 text-2xl font-semibold sm:text-3xl">One shared <em>brain</em> for university students</h2>
+        <p className="mt-2 max-w-3xl text-sm text-muted-foreground">Everything your course and team knows, in one place. Materials go in, knowledge comes out with links back to its source, and three agents keep the work moving.</p>
+        <ol className="stagger mt-6 grid gap-3 md:grid-cols-3">
+          {[
+            { n: "1", t: "Bring it in", d: "Course materials (lectures, slides, notes) and project requirements from coursework briefs.", to: "/courses" as const },
+            { n: "2", t: "Source-linked knowledge", d: "Concepts, definitions and requirements, each pointing back to the document and page it came from.", to: "/knowledge" as const },
+            { n: "3", t: "Agents on top", d: "Knowledge Agent organises it, Collaboration Agent keeps the team in sync, Review Agent checks work against requirements.", to: "/agents" as const },
+          ].map((s) => (
+            <li key={s.n}><Link to={s.to} className="block h-full rounded-lg border p-4 transition-all hover:-translate-y-0.5 hover:border-primary/50 hover:bg-primary/5">
+              <div className="text-xs font-medium text-muted-foreground">Step {s.n}</div>
+              <div className="mt-1 text-sm font-semibold">{s.t}</div>
+              <p className="mt-1 text-xs text-muted-foreground">{s.d}</p>
+            </Link></li>
+          ))}
+        </ol>
+        <p className="mt-4 text-xs text-muted-foreground">Demo: the numbers and activity below are sample data for a fictional student.</p>
+      </section>
 
       <div className="stagger mb-8 grid grid-cols-2 gap-4 lg:grid-cols-4">
         <Stat label="Courses" value={courses.length} icon={<FileText className="h-4 w-4" />} hint="Autumn 2026" />

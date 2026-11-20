@@ -66,6 +66,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               <Search className="h-4 w-4" /> Search knowledge, documents, projects…
             </Link>
           </header>
+          <div role="note" className="border-b bg-sun/60 px-4 py-2 text-center text-xs">Demo mode: sample data stored in your browser only — no sign-in needed. File reading, AI agent processing and shared student memory are simulated, not live.</div>
           <main className="relative mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-8">
             <div className="grid-bg pointer-events-none absolute inset-x-0 top-0 h-96" />
             <div key={path} className="fade-up relative">{children}</div>
