@@ -20,12 +20,12 @@ function Dashboard() {
     <>
       <div className="surface relative mb-8 overflow-hidden p-6 sm:p-8">
         <div className="absolute inset-0 bg-glow opacity-80" />
-        <div className="absolute -right-20 -top-20 h-64 w-64 animate-pulse rounded-full bg-primary/20 blur-3xl" />
-        <div className="absolute -bottom-24 left-1/3 h-56 w-56 animate-pulse rounded-full bg-violet/20 blur-3xl" />
+        <div className="absolute -right-20 -top-20 h-64 w-64 animate-pulse rounded-full bg-lilac blur-3xl" />
+        <div className="absolute -bottom-24 left-1/3 h-56 w-56 animate-pulse rounded-full bg-sun blur-3xl" />
         <div className="relative flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
           <div>
-            <p className="text-sm text-muted-foreground">Friday, 20 November</p>
-            <h1 className="mt-1 text-3xl font-semibold sm:text-4xl">Welcome back, <span className="text-brand gradient-move">Ahyan</span></h1>
+            <span className="inline-flex rounded-full bg-sun px-3 py-1 text-xs font-medium">Friday, 20 November · Autumn term</span>
+            <h1 className="mt-1 text-3xl font-semibold sm:text-4xl">Welcome back, <em>Ahyan</em></h1>
             <p className="mt-2 max-w-xl text-sm text-muted-foreground">You have {openTasks} open tasks across {projects.length} projects. The Review Agent flagged one item for your Market Entry report.</p>
           </div>
           <Button variant="brand" size="lg" asChild><Link to="/chat"><MessageSquareText /> Ask UniHive</Link></Button>

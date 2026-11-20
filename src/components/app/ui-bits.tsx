@@ -44,7 +44,7 @@ export function Stat({ label, value, hint, icon, tone = "primary" }: { label: st
   return (
     <div className="surface lift group relative overflow-hidden p-5">
       <div className={cn("absolute -right-8 -top-8 h-24 w-24 rounded-full opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-60", tone === "primary" ? "bg-primary" : "bg-violet")} />
-      <div className={cn("relative mb-3 grid h-9 w-9 place-items-center rounded-lg transition-transform group-hover:scale-110 group-hover:rotate-6", tone === "primary" ? "bg-primary/15 text-primary" : "bg-violet/15 text-violet")}>{icon}</div>
+      <div className={cn("relative mb-3 grid h-9 w-9 place-items-center rounded-lg transition-transform group-hover:scale-110 group-hover:rotate-6", tone === "primary" ? "bg-aqua text-primary" : "bg-lilac text-primary")}>{icon}</div>
       <div className="relative font-display text-3xl font-semibold">{typeof value === "number" ? <CountUp to={value} /> : value}</div>
       <div className="text-xs text-muted-foreground">{label}</div>
       {hint && <div className="relative mt-2 text-xs text-primary">{hint}</div>}
@@ -53,8 +53,8 @@ export function Stat({ label, value, hint, icon, tone = "primary" }: { label: st
 }
 
 const toneMap = {
-  primary: "bg-primary/15 text-primary",
-  violet: "bg-violet/15 text-violet",
+  primary: "bg-aqua text-primary",
+  violet: "bg-lilac text-primary",
   success: "bg-success/15 text-success",
   warning: "bg-warning/15 text-warning",
   muted: "bg-muted text-muted-foreground",
