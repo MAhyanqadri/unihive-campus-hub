@@ -67,7 +67,7 @@ function Courses() {
   return (
     <>
       <PageHeader title="My Courses" subtitle="Your modules, lecture materials and study progress." action={<NewCourse />} />
-      <div className="mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      <div className="stagger mb-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
         {courses.map((c) => (
           <button key={c.id} onClick={() => setSel(c.id)} className={cn("surface p-5 text-left transition-all hover:-translate-y-0.5", course?.id === c.id && "ring-2 ring-primary shadow-glow")}>
             <div className={cn("mb-4 h-1.5 w-10 rounded-full", bar[c.color])} />

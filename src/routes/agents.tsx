@@ -19,11 +19,11 @@ function Agents() {
   return (
     <>
       <PageHeader title="AI Agents" subtitle="Three specialised agents collaborate to keep your learning and group work on track." />
-      <div className="mb-8 grid gap-4 lg:grid-cols-3">
+      <div className="stagger mb-8 grid gap-4 lg:grid-cols-3">
         {agents.map((a) => {
           const Icon = icons[a.id];
           return (
-            <Panel key={a.id} className="relative overflow-hidden">
+            <Panel key={a.id} className="lift relative overflow-hidden">
               <div className="flex items-start justify-between">
                 <div className={cn("grid h-11 w-11 place-items-center rounded-xl", tint[a.id])}><Icon className="h-5 w-5" /></div>
                 <Pill tone={statusTone[a.status]}><span className={cn("h-1.5 w-1.5 rounded-full bg-current", a.status !== "idle" && "pulse-dot")} />{a.status}</Pill>

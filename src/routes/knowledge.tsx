@@ -30,11 +30,11 @@ function KnowledgeBase() {
       <div className="mb-6 flex flex-wrap gap-2">
         {cats.map((c) => <button key={c} onClick={() => setCat(c)} className={cn("rounded-full border px-3 py-1 text-xs transition-colors", cat === c ? "border-primary bg-primary/15" : "text-muted-foreground hover:text-foreground")}>{c}</button>)}
       </div>
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="stagger grid gap-4 md:grid-cols-2">
         {items.map((k) => {
           const doc = docs.find((d) => d.id === k.sourceDocId);
           return (
-            <Panel key={k.id}>
+            <Panel key={k.id} className="lift">
               <div className="flex items-center justify-between"><Pill tone="violet">{k.category}</Pill><span className="text-xs text-muted-foreground">{k.date}</span></div>
               <h3 className="mt-3 font-semibold">{k.title}</h3>
               <p className="mt-1.5 text-sm text-muted-foreground">{k.content}</p>

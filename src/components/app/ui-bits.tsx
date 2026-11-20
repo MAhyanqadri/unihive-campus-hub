@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { FileText, NotebookPen, Presentation } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { Doc } from "@/lib/data";
@@ -29,13 +29,25 @@ export function Panel({ title, action, children, className }: { title?: string; 
   );
 }
 
-export function Stat({ label, value, hint, icon }: { label: string; value: string | number; hint?: string; icon: ReactNode }) {
+function CountUp({ to }: { to: number }) {
+  const [n, setN] = useState(0);
+  useEffect(() => {
+    let raf = 0; const start = performance.now();
+    const tick = (t: number) => { const p = Math.min(1, (t - start) / 900); setN(Math.round(to * (1 - Math.pow(1 - p, 3)))); if (p < 1) raf = requestAnimationFrame(tick); };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [to]);
+  return <>{n}</>;
+}
+
+export function Stat({ label, value, hint, icon, tone = "primary" }: { label: string; value: string | number; hint?: string; icon: ReactNode; tone?: "primary" | "violet" }) {
   return (
-    <div className="surface relative overflow-hidden p-5">
-      <div className="mb-3 grid h-9 w-9 place-items-center rounded-lg bg-accent text-primary">{icon}</div>
-      <div className="font-display text-2xl font-semibold">{value}</div>
+    <div className="surface lift group relative overflow-hidden p-5">
+      <div className={cn("absolute -right-8 -top-8 h-24 w-24 rounded-full opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-60", tone === "primary" ? "bg-primary" : "bg-violet")} />
+      <div className={cn("relative mb-3 grid h-9 w-9 place-items-center rounded-lg transition-transform group-hover:scale-110 group-hover:rotate-6", tone === "primary" ? "bg-primary/15 text-primary" : "bg-violet/15 text-violet")}>{icon}</div>
+      <div className="relative font-display text-3xl font-semibold">{typeof value === "number" ? <CountUp to={value} /> : value}</div>
       <div className="text-xs text-muted-foreground">{label}</div>
-      {hint && <div className="mt-2 text-xs text-success">{hint}</div>}
+      {hint && <div className="relative mt-2 text-xs text-primary">{hint}</div>}
     </div>
   );
 }
@@ -60,7 +72,7 @@ export function DocIcon({ type }: { type: Doc["type"] }) {
 
 export function DocRow({ doc, meta }: { doc: Doc; meta?: string }) {
   return (
-    <div className="flex items-center gap-3 rounded-lg p-2 transition-colors hover:bg-accent/50">
+    <div className="group flex cursor-pointer items-center gap-3 rounded-lg p-2 transition-all hover:translate-x-1 hover:bg-accent/50">
       <DocIcon type={doc.type} />
       <div className="min-w-0 flex-1">
         <div className="truncate text-sm font-medium">{doc.name}</div>

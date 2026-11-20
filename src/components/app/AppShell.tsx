@@ -23,7 +23,7 @@ function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader>
         <Link to="/" className="flex items-center gap-2.5 px-2 py-3">
-          <div className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-brand shadow-glow"><Hexagon className="h-4 w-4 text-primary-foreground" /></div>
+          <div className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-brand gradient-move shadow-glow"><Hexagon className="h-4 w-4 text-primary-foreground" /></div>
           {!collapsed && <span className="font-display text-lg font-semibold">UniHive</span>}
         </Link>
       </SidebarHeader>
@@ -35,7 +35,7 @@ function AppSidebar() {
               {nav.map((n) => (
                 <SidebarMenuItem key={n.url}>
                   <SidebarMenuButton asChild isActive={active(n.url)} tooltip={n.title}>
-                    <Link to={n.url}><n.icon /><span>{n.title}</span></Link>
+                    <Link to={n.url} className="data-[active=true]:text-primary data-[active=true]:shadow-[inset_2px_0_0_var(--primary)]"><n.icon /><span>{n.title}</span></Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
@@ -54,6 +54,7 @@ function AppSidebar() {
 }
 
 export function AppShell({ children }: { children: ReactNode }) {
+  const path = useRouterState({ select: (r) => r.location.pathname });
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full">
@@ -65,7 +66,10 @@ export function AppShell({ children }: { children: ReactNode }) {
               <Search className="h-4 w-4" /> Search knowledge, documents, projects…
             </Link>
           </header>
-          <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-8">{children}</main>
+          <main className="relative mx-auto w-full max-w-7xl flex-1 px-4 py-8 sm:px-8">
+            <div className="grid-bg pointer-events-none absolute inset-x-0 top-0 h-96" />
+            <div key={path} className="fade-up relative">{children}</div>
+          </main>
         </div>
       </div>
     </SidebarProvider>
