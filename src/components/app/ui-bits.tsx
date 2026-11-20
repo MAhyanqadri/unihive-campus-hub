@@ -20,7 +20,7 @@ export function Panel({ title, action, children, className }: { title?: string; 
     <section className={cn("surface p-5", className)}>
       {title && (
         <div className="mb-4 flex items-center justify-between">
-          <h2 className="text-sm font-semibold tracking-wide">{title}</h2>
+          <h2 className="label-mono font-sans text-muted-foreground">{title}</h2>
           {action}
         </div>
       )}
@@ -46,7 +46,7 @@ export function Stat({ label, value, hint, icon, tone = "primary" }: { label: st
       <div className={cn("absolute -right-8 -top-8 h-24 w-24 rounded-full opacity-0 blur-2xl transition-opacity duration-500 group-hover:opacity-60", tone === "primary" ? "bg-primary" : "bg-violet")} />
       <div className={cn("relative mb-3 grid h-9 w-9 place-items-center rounded-lg transition-transform group-hover:scale-110 group-hover:rotate-6", tone === "primary" ? "bg-aqua text-primary" : "bg-lilac text-primary")}>{icon}</div>
       <div className="relative font-display text-3xl font-semibold">{typeof value === "number" ? <CountUp to={value} /> : value}</div>
-      <div className="text-xs text-muted-foreground">{label}</div>
+      <div className="label-mono text-muted-foreground">{label}</div>
       {hint && <div className="relative mt-2 text-xs text-primary">{hint}</div>}
     </div>
   );
@@ -62,7 +62,7 @@ const toneMap = {
 } as const;
 export type Tone = keyof typeof toneMap;
 export function Pill({ tone = "muted", children }: { tone?: Tone; children: ReactNode }) {
-  return <span className={cn("inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-medium", toneMap[tone])}>{children}</span>;
+  return <span className={cn("inline-flex items-center gap-1 rounded-sm px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider", toneMap[tone])}>{children}</span>;
 }
 
 export function DocIcon({ type }: { type: Doc["type"] }) {
